@@ -1,7 +1,6 @@
 package com.mtd.EcomApp.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.mtd.EcomApp.entity.Product;
 import com.mtd.EcomApp.service.ProductService;
 
@@ -21,11 +19,10 @@ import com.mtd.EcomApp.service.ProductService;
 @CrossOrigin("*")
 public class ProductController {
 	@Autowired
-	private ProductService productService; // This is the instance you need to use
+	private ProductService productService;
 	
 	@PostMapping("/save")
 	public Product save(@RequestBody Product product) {
-		// Call the method on the instance, not the class
 		return productService.saveProduct(product); 
 	}
 	
@@ -33,16 +30,19 @@ public class ProductController {
 	public Product findById(@PathVariable String id) {
 		return productService.getProductById(id);
 	}
+
 	@GetMapping("/all")
 	public List<Product> findAll(){
 		return productService.getProducts();
 	}
+
 	@PutMapping("/{id}")
-	public Product updateProduct(Product product ,@PathVariable String id) {
+	public Product updateProduct(@RequestBody Product product, @PathVariable String id) {
 		return productService.updateProduct(product, id);
 	}
+
 	@DeleteMapping("/{id}")
-	public boolean deleteProduct(String id) {
+	public boolean deleteProduct(@PathVariable String id) {
 		return productService.deleteProduct(id);
 	}
 }
